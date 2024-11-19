@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gradient</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            color: white;
+            transition: background 0.5s ease;
+        }
+        section {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+        }
+        button {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #555;
+        }
+        h2 {
+            margin-top: 20px;
+        }
+        .gradient-text {
+            font-family: 'Courier New', Courier, monospace;
+            margin-top: 10px;
+            font-size: 16px;
+            padding: 10px;
+            border-radius: 5px;
+            color: #333;
+            word-wrap: break-word;
+            background-color: #515353;
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <div>
+            <button id="btn1">Change Gradient 1</button>
+            <button id="btn2">Change Gradient 2</button>
+        </div>
+        <h2>Copy your style here</h2>
+        <div id="gradient-text" class="gradient-text">
+            background: linear-gradient(to right, #ff0000, #00ff00);
+        </div>
+        <button id="copy-btn">Copy Gradient CSS</button>
+    </section>
+
+    <script>
+        // Initialize gradient with two colors
+        let currentColor1 = '#000'; 
+        let currentColor2 = '#fff'; 
+
+        // Function to generate a random hex color
+        function getRandomHexColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        // Function to update the background and the CSS code display
+        function updateGradient() {
+            const gradient = `linear-gradient(to right, ${currentColor1}, ${currentColor2})`;
+            document.body.style.background = gradient;
+            document.getElementById("gradient-text").textContent = `background: ${gradient};`;
+        }
+        function changeBtnColor() {
+            document.getElementById("btn1").style.backgroundColor = getRandomHexColor();
+            document.getElementById("btn2").style.backgroundColor = getRandomHexColor();
+        }
+
+
+
+        // Event listeners for buttons to change only one side of the gradient
+        document.getElementById("btn1").addEventListener("click",() =>{
+            currentColor1 = getRandomHexColor(); 
+            updateGradient(); 
+            changeBtnColor();
+        });
+
+        document.getElementById("btn2").addEventListener("click", ()=> {
+            currentColor2 = getRandomHexColor(); 
+            updateGradient();
+            changeBtnColor();
+        
+        });
+
+        
+        document.getElementById("copy-btn").addEventListener("click", ()=> {
+            const gradientText = document.getElementById("gradient-text");
+            console.log(navigator.clipboard.writeText(gradientText.innerText));  
+
+            alert("Gradient CSS copied to clipboard!");
+        });
+
+        updateGradient();
+    </script>
+</body>
+</html>
